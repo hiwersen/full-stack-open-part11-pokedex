@@ -10,4 +10,16 @@ describe('Pokedex', () => {
       ),
     ).toBeVisible()
   })
+
+  test('should navigate to Ivysaur page and show hidden ability: Chlorophyll', async ({
+    page,
+  }) => {
+    await page.goto('')
+    await page.getByRole('link', { name: 'ivysaur' }).click()
+
+    await expect(page).toHaveURL(/\/pokemon\/ivysaur/)
+    await expect(
+      page.getByText('Hidden ability').locator('..').getByText('chlorophyll'),
+    ).toBeVisible()
+  })
 })
