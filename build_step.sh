@@ -2,6 +2,10 @@
 
 echo "~~~~~ Build Script ~~~~~"
 
-npm install
+set -e
+
+npm ci
+
+rm -rf dist
 
 npm run build
