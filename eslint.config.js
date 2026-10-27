@@ -15,7 +15,12 @@ module.exports = [
     ],
   },
   {
-    files: ['app.js', 'jest.setup.js'],
+    files: [
+      'app.js',
+      'jest.setup.js',
+      'playwright.config.js',
+      'e2e-tests/**/*.{js,jsx}',
+    ],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'commonjs',
