@@ -23,3 +23,8 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+
+      - name: Log commit messages string
+        env:
+          COMMIT_MESSAGES_STRING: ${{ join($COMMIT_MESSAGES) }}
+        run: echo "$COMMIT_MESSAGES_STRING"
