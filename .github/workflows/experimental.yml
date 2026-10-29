@@ -1,0 +1,15 @@
+name: Experimental Workflow
+
+on:
+  push:
+    branches:
+      - ci/experimental
+
+jobs:
+  experimental_logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
