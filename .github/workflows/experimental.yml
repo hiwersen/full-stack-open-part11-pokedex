@@ -26,10 +26,10 @@ jobs:
 
       - name: Log commit messages string
         env:
-          COMMIT_MESSAGES_STRING: ${{ join($COMMIT_MESSAGES, ', ') }}
+          COMMIT_MESSAGES_STRING: ${{ join(toJson(env.COMMIT_MESSAGES), ', ') }}
         run: echo "$COMMIT_MESSAGES_STRING"
 
       - name: Check skip message
         env:
-          SKIP: ${{ contains($COMMIT_MESSAGES_STRING, '#skip') }}
+          SKIP: ${{ contains(env.COMMIT_MESSAGES_STRING, '#skip') }}
         run: echo "$SKIP"
