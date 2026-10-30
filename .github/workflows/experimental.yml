@@ -6,33 +6,12 @@ on:
       - ci/experimental
 
 env:
-  GITHUB_CONTEXT: ${{ toJson(github) }}
-  COMMITS: ${{ toJson(github.event.commits) }}
-  COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
-
-  IS_PUSH: ${{ github.event_name == 'push' }}
-  IS_CI_EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
+  SHOULD_DEPLOY: ${{ github.event_name == 'push' && github.ref_name == 'ci/experimental' && !contains(join(github.event.commits.*.message, ', '), '#SKIP') }}
 
 jobs:
   experimental_logs:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Log GitHub context
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Log commits
-        run: echo "$COMMITS"
-
-      - name: Log commit messages
-        run: echo "$COMMIT_MESSAGES"
-
-      - name: Check push event
-        run: echo "$IS_PUSH"
-
-      - name: Check ci/experimental branch
-        run: echo "$IS_CI_EXPERIMENTAL"
-
-      - name: Check skip commit message
-        env:
-          HAS_SKIP_COMMIT_MESSAGE: ${{ contains(env.COMMIT_MESSAGES, '#SKIP') }}
-        run: echo "$HAS_SKIP_COMMIT_MESSAGE"
+      - name: Check if it should deploy
+        run: echo "$SHOULD_DEPLOY"
