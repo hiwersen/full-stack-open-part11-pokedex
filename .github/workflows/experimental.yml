@@ -19,9 +19,16 @@ jobs:
           COMMITS: ${{ toJson(github.event.commits) }}
         run: echo "$COMMITS"
 
+      - name: Check push to ci/experimental
+        env:
+          IS_PUSH: ${{ github.event_name == "push" }}
+          IS_PUSH_TO_CI/EXPERIMENTAL: ${{ IS_PUSH && github.ref_name == "ci/experimental"L }}
+        run: |
+          echo "Is push to ci/experimental: $IS_PUSH_TO_CI/EXPERIMENTAL"
+
       - name: Check skip commit
         env:
-          SKIP_COMMIT: ${{ contains(join(github.event.commits.*.message, ', '), 'SKIP') }}
+          COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
+          HAS_SKIP_COMMIT: ${{ contains(COMMIT_MESSAGES, '#SKIP') }}
         run: |
-          echo "Messages: ${{ join(github.event.commits.*.message, ', ') }}"
-          echo "$SKIP_COMMIT"
+          echo "Has skip commit: $HAS_SKIP_COMMIT"
