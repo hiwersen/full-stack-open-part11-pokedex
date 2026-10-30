@@ -13,7 +13,7 @@ env:
   IS_PUSH: ${{ github.event_name == 'push' }}
   IS_CI_EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
 
-  HAS_SKIP_COMMIT_MESSAGE: ${{ contains(env.COMMIT_MESSAGES, '#SKIP') }}
+  HAS_SKIP_COMMIT_MESSAGE: ${{ contains(github.env.COMMIT_MESSAGES, '#SKIP') }}
 
 jobs:
   experimental_logs:
