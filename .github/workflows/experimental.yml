@@ -21,8 +21,8 @@ jobs:
 
       - name: Check push to ci/experimental
         env:
-          IS_PUSH: ${{ github.event_name == "push" }}
-          IS_PUSH_TO_CI/EXPERIMENTAL: ${{ IS_PUSH && github.ref_name == "ci/experimental" }}
+          IS_PUSH: ${{ github.event_name == 'push' }}
+          IS_PUSH_TO_CI/EXPERIMENTAL: ${{ IS_PUSH && github.ref_name == 'ci/experimental' }}
         run: |
           echo "Is push to ci/experimental: $IS_PUSH_TO_CI/EXPERIMENTAL"
 
