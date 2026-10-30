@@ -26,10 +26,10 @@ jobs:
 
       - name: Concatenate commit messages
         env:
-          CONCATENATED_COMMIT_MESSAGES: ${{ join(fromJson(github.event.commits.*.message), ', ') }}
+          CONCATENATED_COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
         run: echo "$CONCATENATED_COMMIT_MESSAGES"
 
       - name: Check skip command
         env:
-          SKIP: ${{ contains(join(fromJson(github.event.commits.*.message), ', '), '#skip') }}
+          SKIP: ${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}
         run: echo "$SKIP"
