@@ -24,12 +24,12 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
 
-      - name: Log commit messages string
+      - name: Concatenate commit messages
         env:
-          COMMIT_MESSAGES_STRING: ${{ join(toJson(env.COMMIT_MESSAGES), ', ') }}
-        run: echo "$COMMIT_MESSAGES_STRING"
+          CONCATENATED_COMMIT_MESSAGES: ${{ join(toJson(github.event.commits.*.message)), ', ') }}
+        run: echo "$CONCATENATED_COMMIT_MESSAGES"
 
-      - name: Check skip message
+      - name: Check skip command
         env:
-          SKIP: ${{ contains(env.COMMIT_MESSAGES_STRING, '#skip') }}
+          SKIP: ${{ contains(join(toJson(github.event.commits.*.message)), ', '), '#skip') }}
         run: echo "$SKIP"
