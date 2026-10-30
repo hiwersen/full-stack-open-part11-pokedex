@@ -13,6 +13,8 @@ env:
   IS_PUSH: ${{ github.event_name == 'push' }}
   IS_CI_EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
 
+  HAS_SKIP_COMMIT_MESSAGE: ${{ contains(env.COMMIT_MESSAGES, '#SKIP') }}
+
 jobs:
   experimental_logs:
     runs-on: ubuntu-latest
@@ -31,3 +33,6 @@ jobs:
 
       - name: Check ci/experimental branch
         run: echo "$IS_CI_EXPERIMENTAL"
+
+      - name: Check skip commit message
+        run: echo "$HAS_SKIP_COMMIT_MESSAGE"
