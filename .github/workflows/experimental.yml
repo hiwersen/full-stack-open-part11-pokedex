@@ -33,3 +33,7 @@ jobs:
         env:
           CONTAINS: ${{ contains('Hello, world!', 'Ello') }}
         run: echo "$CONTAINS"
+
+      - name: Check skip commit
+        env:
+          SKIP_COMMIT: ${{ contains(join(github.event.commits.*.message, ', '), '#SKIP') }}
