@@ -29,7 +29,7 @@ jobs:
           CONCATENATED_COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
         run: echo "$CONCATENATED_COMMIT_MESSAGES"
 
-      - name: Check skip command
+      - name: Test contains function
         env:
-          SKIP: ${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}
-        run: echo "$SKIP"
+          CONTAINS: ${{ contains("Hello, world!", 'Ello') }}
+        run: echo "$CONTAINS"
