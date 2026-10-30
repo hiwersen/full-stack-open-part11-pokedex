@@ -19,22 +19,9 @@ jobs:
           COMMITS: ${{ toJson(github.event.commits) }}
         run: echo "$COMMITS"
 
-      - name: Log commit messages
-        env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: echo "$COMMIT_MESSAGES"
-
-      - name: Concatenate commit messages
-        env:
-          CONCATENATED_COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
-        run: echo "$CONCATENATED_COMMIT_MESSAGES"
-
-      - name: Test contains function
-        env:
-          CONTAINS: ${{ contains('Hello, world!', 'Ello') }}
-        run: echo "$CONTAINS"
-
       - name: Check skip commit
         env:
           SKIP_COMMIT: ${{ contains(join(github.event.commits.*.message, ', '), '#SKIP') }}
-        run: echo "$SKIP_COMMIT"
+        run: |
+          echo "Messages: ${{ join(github.event.commits.*.message, ', ') }}"
+          echo "$SKIP_COMMIT"
