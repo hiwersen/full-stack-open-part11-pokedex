@@ -5,30 +5,29 @@ on:
     branches:
       - ci/experimental
 
+env:
+  GITHUB_CONTEXT: ${{ toJson(github) }}
+  COMMITS: ${{ toJson(github.event.commits) }}
+  COMMIT_MESSAGES: ${{ join(github.event.commits.*.messages, ', ') }}
+
+  IS_PUSH: ${{ github.event_name == 'push' }}
+  IS_CI/EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
+
 jobs:
   experimental_logs:
     runs-on: ubuntu-latest
     steps:
       - name: Log GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
       - name: Log commits
-        env:
-          COMMITS: ${{ toJson(github.event.commits) }}
         run: echo "$COMMITS"
 
-      - name: Check push to ci/experimental
-        env:
-          IS_PUSH: ${{ github.event_name == 'push' }}
-          IS_PUSH_TO_CI/EXPERIMENTAL: ${{ IS_PUSH && github.ref_name == 'ci/experimental' }}
-        run: |
-          echo "Is push to ci/experimental: $IS_PUSH_TO_CI/EXPERIMENTAL"
+      - name: Log commit messages
+        run: echo "$COMMIT_MESSAGES"
 
-      - name: Check skip commit
-        env:
-          COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
-          HAS_SKIP_COMMIT: ${{ contains(COMMIT_MESSAGES, '#SKIP') }}
-        run: |
-          echo "Has skip commit: $HAS_SKIP_COMMIT"
+      - name: Check push event
+        run: echo "$IS_PUS"
+
+      - name: Check ci/experimental branch
+        run: echo "$IS_CI/EXPERIMENTAL"
