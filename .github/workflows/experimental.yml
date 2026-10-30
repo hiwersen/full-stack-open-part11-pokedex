@@ -34,5 +34,5 @@ jobs:
 
       - name: Check skip commit message
         env:
-          HAS_SKIP_COMMIT_MESSAGE: ${{ contains(github.env.COMMIT_MESSAGES, '#SKIP') }}
+          HAS_SKIP_COMMIT_MESSAGE: ${{ contains(env.COMMIT_MESSAGES, '#SKIP') }}
         run: echo "$HAS_SKIP_COMMIT_MESSAGE"
