@@ -8,10 +8,10 @@ on:
 env:
   GITHUB_CONTEXT: ${{ toJson(github) }}
   COMMITS: ${{ toJson(github.event.commits) }}
-  COMMIT_MESSAGES: ${{ join(github.event.commits.*.messages, ', ') }}
+  COMMIT_MESSAGES: ${{ join(github.event.commits.*.message, ', ') }}
 
   IS_PUSH: ${{ github.event_name == 'push' }}
-  IS_CI/EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
+  IS_CI_EXPERIMENTAL: ${{ github.ref_name == 'ci/experimental' }}
 
 jobs:
   experimental_logs:
@@ -27,7 +27,7 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
 
       - name: Check push event
-        run: echo "$IS_PUS"
+        run: echo "$IS_PUSH"
 
       - name: Check ci/experimental branch
-        run: echo "$IS_CI/EXPERIMENTAL"
+        run: echo "$IS_CI_EXPERIMENTAL"
