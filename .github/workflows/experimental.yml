@@ -21,7 +21,7 @@ jobs:
 
       - name: Check skip commit
         env:
-          SKIP_COMMIT: ${{ contains(join(github.event.commits.*.message, ', '), '#SKIP') }}
+          SKIP_COMMIT: ${{ contains(join(github.event.commits.*.message, ', '), 'SKIP') }}
         run: |
           echo "Messages: ${{ join(github.event.commits.*.message, ', ') }}"
           echo "$SKIP_COMMIT"
