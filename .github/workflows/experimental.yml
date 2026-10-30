@@ -31,5 +31,5 @@ jobs:
 
       - name: Test contains function
         env:
-          CONTAINS: ${{ contains("Hello, world!", 'Ello') }}
+          CONTAINS: ${{ contains('Hello, world!, 'Ello') }}
         run: echo "$CONTAINS"
