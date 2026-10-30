@@ -51,7 +51,11 @@ jobs:
 
       - name: Trigger Deployment
         if: env.SHOULD_DEPLOY == 'true'
-        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl --fail ${{ secrets.RENDER_DEPLOY_HOOK }}
+
+      - name: Force failure
+        if: vars.FORCE_FAIL == 'true'
+        run: exit 1
 
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -66,7 +70,7 @@ jobs:
 
       - name: Bump version and push tag
         if: env.SHOULD_DEPLOY == 'true'
-        uses: anothrNick/github-tag-action@1.75.0
+        uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
