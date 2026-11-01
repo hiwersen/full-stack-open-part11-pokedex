@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify successful deploy to Discord
-        if: false && env.SHOULD_DEPLOY == 'true' && !contains(needs.*.result, 'failure') && needs.simple_deployment_pipeline.result == 'success'
+        if: env.SHOULD_DEPLOY == 'true' && !contains(needs.*.result, 'failure') && needs.simple_deployment_pipeline.result == 'success'
         uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
@@ -101,7 +101,7 @@ jobs:
           REPOSITORY_URL: ${{ github.event.repository.html_url }}
 
       - name: Notify PR failure to Discord
-        if: false && contains(needs.*.result, 'failure') && github.event_name == 'pull_request'
+        if: contains(needs.*.result, 'failure') && github.event_name == 'pull_request'
         uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
@@ -137,7 +137,7 @@ jobs:
           REPOSITORY_URL: ${{ github.event.repository.html_url }}
 
       - name: Notify build failure to Discord
-        if: false && contains(needs.*.result, 'failure') && github.event_name == 'push' && github.ref_name == 'main'
+        if: contains(needs.*.result, 'failure') && github.event_name == 'push' && github.ref_name == 'main'
         uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
