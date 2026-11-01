@@ -118,6 +118,7 @@ jobs:
       - name: Preview failure notification
         if: contains(needs.*.result, 'failure')
         env:
+          GITHUB: ${{ toJson(github) }}
           GITHUB_URL: ${{ github.server_url }}
           REPOSITORY: ${{ github.repository }}
           REPO_URL: ${{ github.event.repository.html_url }}
@@ -139,3 +140,4 @@ jobs:
           echo "Workflow: $WORKFLOW"
           echo "Job: $JOB"
           echo "View workflow run: ($REPO_URL /actions/runs/ $WORKFLOW_RUN)"
+          echo "GitHub context: $GITHUB"
