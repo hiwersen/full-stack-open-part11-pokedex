@@ -1,0 +1,40 @@
+name: Periodic Health Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the deployed service URL
+        id: health-check
+        uses: jtalk/url-health-check-action@e7d5ebdc9027fbf494d2d034f3e8fc78f8b7a2b9
+        with:
+          url: https://full-stack-open-part11-pokedex.onrender.com/broken-app
+          max-attempts: 3
+          retry-delay: 60s
+
+      - run: echo "health check hit!"
+
+      - name: Log github context
+        if: always()
+        env:
+          GITHUB: ${{ toJson(github) }}
+        run: echo "$GITHUB" > github-context.json
+
+      - name: Log health check context
+        if: always()
+        env:
+          HEALTH_CHECK: ${{ toJson(steps.health-check) }}
+        run: echo "$HEALTH_CHECK" > health-check-context.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs
+          path: |
+            github-context.json
+            health-check-context.json
