@@ -11,7 +11,7 @@ app.get('/version', (_req, res) => {
 })
 
 app.get('/health', (_req, res) => {
-  console.log('Checking health check path')
+  console.log('health check path hit!')
   res.send('ok')
 })
 
