@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 5001
 app.use(express.static('dist'))
 
 app.get('/version', (_req, res) => {
-  res.send('2.1.4')
+  res.send('2.1.5')
 })
 
-app.get('/health', (_req, res) => {
+app.get('/health/broken-app', (_req, res) => {
   console.log('health check path hit!')
   res.send('ok')
 })
